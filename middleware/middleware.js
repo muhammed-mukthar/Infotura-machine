@@ -1,4 +1,4 @@
-const { verifyJwt } = require("../utils/jwtUtil");
+const { verifyJwt } = require("../utils/jwt");
 const { get } = require("lodash");
 
 module.exports.VerifyToken = async (req, res, next) => {

@@ -45,17 +45,14 @@ const ApplicationModel = new mongoose.Schema({
     type: String,
   },
   expecting_salary: {
-    type: String,
+    type: Number,
   },
   hourly_salary: {
-    type: String,
+    type: Number,
   },
   apply: {
     type: String,
-  },
-  password: {
-    type: String,
-  },
+  }
 });
 
 const Data = mongoose.model("Application", ApplicationModel);
