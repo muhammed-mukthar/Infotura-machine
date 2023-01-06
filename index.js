@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
-
+const freelanceroute=require('./routes/FreelancerRoute')
 const cors=require('cors')
 const morgan = require("morgan");
 app.use(express.json());
@@ -22,7 +22,7 @@ db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
   console.log("db Connected successfully");
 });
-
+app.use('/freelance',freelanceroute,)
 
 app.listen(process.env.PORT, () => {
   console.log(`port running on ${port}`);
