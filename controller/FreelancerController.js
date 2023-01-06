@@ -1,24 +1,43 @@
 const FreelancerModel = require("../models/FreelancerModel");
+const { generateAccessToken } = require("../utils/jwt");
+
 exports.LoginHandler = async (req, res) => {
   try {
     console.log(req.body);
     const user = await FreelancerModel.findOne({ email: req.body.email });
     if (!user) {
-      return res.json({ err: "user not found" });
+      return res.status(400).json({ err: "user not found" });
     }
     const isValid = await user.comparePassword(req.body.password);
     console.log(isValid);
     if (!isValid) {
-      return res.json({ err: "invalid password" });
+      return res.status(403).json({ err: "invalid password" });
     }
     const userDetails = {
       _id: user._id,
       email: user.email,
     };
-
-    console.log(accessToken);
-    res.json({ data: userDetails });
+    const accessToken = generateAccessToken(userDetails);
+    res.json({ data: userDetails, accessToken: accessToken });
   } catch (error) {
     res.status(500).json({ err: error });
   }
 };
+
+exports.createUserHandler=async (req, res)=> {
+  try {
+    let userexist = await FreelancerModel.findOne({
+      $or: [{ email: req.body.email }, { phone: req.body.phone }],
+    });
+
+    if (userexist) {
+      res.json({ err: "user already exist" });
+    } else {
+      const user = await FreelancerModel.create(req.body);
+
+      res.json(user);
+    }
+  } catch (err) {
+    res.status(409).json({ err: err.message });
+  }
+}
