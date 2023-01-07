@@ -9,7 +9,7 @@ const router = require("express").Router();
 
 router.post("/login", LoginHandler);
 router.post("/register", createUserHandler);
-router.post("/application", async (req, res) => {
+router.post("/application",VerifyToken, async (req, res) => {
   try {
     const application = await ApplicationModel.create(req.body);
     res.json(application);
