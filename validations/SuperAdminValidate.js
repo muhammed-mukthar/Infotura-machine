@@ -19,3 +19,7 @@ exports.ValidateSuperAdminLogin = [
   // Validate each sub-subject in the "subSubjects" array
   check('subSubjects.*.name').not().isEmpty().withMessage('Sub-subject name is required'),
   ]
+  exports.VaildateCourse=[
+    // Validate the "course" field
+ check('course').not().isEmpty().withMessage('course is required')
+ ]
