@@ -49,13 +49,16 @@ const ApplicationModel = new mongoose.Schema({
   },
   hourly_salary: {
     type: Number,
+  },  userId: {
+    type: String,
+ 
   },
   apply: {
     type: String,
   },
   selected: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 

@@ -10,6 +10,7 @@ module.exports.VerifyToken = async (req, res, next) => {
     res.status(401).json({ err: "you are not permited " });
   } else {
     const { decoded, expired } = verifyJwt(accessToken, "accessTokenSecret");
+    console.log(decoded);
     if (decoded) {
       req.user = decoded;
       return next();

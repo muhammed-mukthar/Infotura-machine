@@ -45,6 +45,7 @@ exports.createUserHandler = async (req, res) => {
     if (userexist) {
       res.json({ err: "user already exist" });
     } else {
+    
       const user = await FreelancerModel.create(req.body);
       res.json(user);
     }
@@ -59,8 +60,14 @@ exports.applicationHandler = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-
-    const application = await ApplicationModel.create(req.body);
+const userId=    req.user._id
+console.log(userId);
+const applicationData = {
+  userId: userId,
+  ...req.body
+};
+console.log(applicationData);
+    const application = await ApplicationModel.create(applicationData);
     res.json(application);
   } catch (err) {
     res.status(409).json({ err: err.message });

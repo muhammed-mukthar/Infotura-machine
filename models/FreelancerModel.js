@@ -6,6 +6,7 @@ const FreelancerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
   name: {
     type: String,
   },
@@ -17,7 +18,7 @@ const FreelancerSchema = new mongoose.Schema({
   },
   selected: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 // pre

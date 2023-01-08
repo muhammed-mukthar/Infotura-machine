@@ -90,3 +90,27 @@ exports.ValidateApplication = [
     .isIn(["online", "offline"])
     .withMessage("Invalid application method"),
 ];
+exports.ValidateFaculty = [
+  check("email")
+    .isEmail()
+    .withMessage("Invalid email")
+    .notEmpty()
+    .withMessage("email cannot be empty"),
+  check("password")
+    .isLength({ min: 5 })
+    .notEmpty()
+    .withMessage("password cannot be empty"),
+  check("name")
+    .notEmpty()
+    .withMessage("Name is required")
+    .isLength({ min: 3 })
+    .withMessage("name should have min length of 3 character"),
+  check("phone")
+    .isNumeric()
+    .withMessage("write a valid number")
+    .isLength({ min: 10, max: 10 })
+    .withMessage("phone number should have 10 values"),
+  check("place")
+    .isLength({ min: 3 })
+    .withMessage("place should have min 3 values"),
+];
