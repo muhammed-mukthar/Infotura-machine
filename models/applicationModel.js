@@ -52,7 +52,11 @@ const ApplicationModel = new mongoose.Schema({
   },
   apply: {
     type: String,
-  }
+  },
+  selected: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const Data = mongoose.model("Application", ApplicationModel);

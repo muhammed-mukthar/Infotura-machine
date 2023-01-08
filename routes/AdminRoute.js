@@ -1,13 +1,11 @@
-const {
-    LoginHandler,
-    createUserHandler,
-  } = require("../controller/FreelancerController");
+
+const { SuperAdminLoginHandler } = require("../controller/SuperAdminController");
   const { VerifyToken } = require("../middleware/middleware");
-  const ApplicationModel = require("../models/applicationModel");
+const { ValidateSuperAdminLogin } = require("../validations/SuperAdminValidate");
   
   const router = require("express").Router();
   
-  router.post("/login", LoginHandler);
+  router.post("/login", ValidateSuperAdminLogin,SuperAdminLoginHandler);
 
   module.exports = router;
   

@@ -25,7 +25,7 @@ db.once("open", function () {
   console.log("db Connected successfully");
 });
 app.use('/freelance',freelanceroute,)
-
+app.use('/superadmin',Adminroute)
 app.listen(process.env.PORT, () => {
   console.log(`port running on ${port}`);
 });
