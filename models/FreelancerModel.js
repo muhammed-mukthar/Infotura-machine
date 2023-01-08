@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt=require('bcrypt')
+const bcrypt = require("bcrypt");
 
 const FreelancerSchema = new mongoose.Schema({
   email: {
@@ -7,30 +7,31 @@ const FreelancerSchema = new mongoose.Schema({
     required: true,
   },
   name: {
-    type:String
+    type: String,
   },
   phone: {
-    type:Number
+    type: Number,
   },
   password: {
-    type:String
-  }
+    type: String,
+  },
+  selected: {
+    type: Boolean,
+    default: true,
+  },
 });
-// pre                                                                                                                                                                         
-FreelancerSchema.pre('save', function(next) {                                                                                                                                        
-    if(this.password) {                                                                                                                                                        
-        let salt = bcrypt.genSaltSync(10)                                                                                                                                     
-        this.password  = bcrypt.hashSync(this.password, salt)                                                                                                                
-    }                                                                                                                                                                          
-    next()                                                                                                                                                                     
-})            
+// pre
+FreelancerSchema.pre("save", function (next) {
+  if (this.password) {
+    let salt = bcrypt.genSaltSync(10);
+    this.password = bcrypt.hashSync(this.password, salt);
+  }
+  next();
+});
 
-FreelancerSchema.methods.comparePassword = async function (
-    passwordInput
-  ) {
-
-      return bcrypt.compare(passwordInput,this.password).catch((e)=>false)
-  };
+FreelancerSchema.methods.comparePassword = async function (passwordInput) {
+  return bcrypt.compare(passwordInput, this.password).catch((e) => false);
+};
 
 const Data = mongoose.model("Freelancer", FreelancerSchema);
 

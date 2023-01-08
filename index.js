@@ -3,6 +3,8 @@ const app = express();
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const freelanceroute=require('./routes/FreelancerRoute')
+const Adminroute=require('./routes/AdminRoute')
+
 const cors=require('cors')
 const morgan = require("morgan");
 app.use(express.json());

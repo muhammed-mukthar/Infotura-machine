@@ -5,7 +5,7 @@ const ApplicationModel = new mongoose.Schema({
   address: {
     type: String,
   },
-  ame: {
+  name: {
     type: String,
   },
   adhar: {
@@ -26,7 +26,7 @@ const ApplicationModel = new mongoose.Schema({
   dob: {
     type: String,
   },
-  relegion: {
+  religion: {
     type: String,
   },
   caste: {
@@ -35,7 +35,7 @@ const ApplicationModel = new mongoose.Schema({
   education: {
     type: String,
   },
-  exprience: {
+  experience: {
     type: String,
   },
   course: {
