@@ -5,7 +5,8 @@ const SubjectModel = require("../models/SubjectModel");
 const CourseModel = require("../models/CourseModel");
 const ApplicationModel = require("../models/applicationModel");
 const FreelancerModel = require("../models/FreelancerModel");
-const FacultyModel=require('../models/FacultyModel')
+const FacultyModel = require("../models/FacultyModel");
+const JobModel=require('../models/JobModel')
 exports.SuperAdminLoginHandler = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -136,21 +137,20 @@ exports.approveApplicationHandler = async (req, res) => {
   }
 };
 
-
-exports.addFacultyHandler=async(req,res)=>{
-    try{
-        const errors = validationResult(req);
+exports.addFacultyHandler = async (req, res) => {
+  try {
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
 
     let newFaculty = new FacultyModel({
-        email: req.body.email,
-          name: req.body.name,
-          phone: req.body.phone,
-          password: req.body.password,
-          place:req.body.place,
-          phone:req.body.phone
+      email: req.body.email,
+      name: req.body.name,
+      phone: req.body.phone,
+      password: req.body.password,
+      place: req.body.place,
+      phone: req.body.phone,
     });
 
     newFaculty.save((error) => {
@@ -160,8 +160,44 @@ exports.addFacultyHandler=async(req,res)=>{
         res.send("Course saved successfully");
       }
     });
-    }catch(err){
-        res.status(500).json(err);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
-    }
-}
+exports.addJobHandler = async (req, res) => {
+  try {
+  
+    const startTime = new Date("2022-09-01T09:00:00Z");
+    const endTime = new Date("2022-09-01T10:30:00Z");
+
+    const duration = endTime.getTime() - startTime.getTime();
+
+    const days = Math.floor(duration / 86400000); // 1 day = 86400000 milliseconds
+    const hours = Math.floor((duration % 86400000) / 3600000); // 1 hour = 3600000 milliseconds
+    const minutes = Math.floor((duration % 3600000) / 60000); // 1 minute = 60000 milliseconds
+
+    let timeString = `${days} days, ${hours} hours, ${minutes} minutes`; // "0 days, 0
+    let newJob = new JobModel({
+      region: req.body.region,
+
+      course: req.body.course,
+      faculty: req.body.faculty,
+      subject: req.body.subject,
+      lesson: req.body.lesson,
+      startTime: req.body.startTime,
+      endTime: req.body.endTime,
+      time: timeString,
+    });
+
+    newJob.save((error) => {
+      if (error) {
+        res.status(400).send(error); // return error if validation fails
+      } else {
+        res.send("Course saved successfully");
+      }
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};

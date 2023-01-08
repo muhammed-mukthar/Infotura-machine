@@ -14,10 +14,5 @@ const router = require("express").Router();
 
 router.post("/login", ValidateLogin, LoginHandler);
 router.post("/register", ValidateRegistration, createUserHandler);
-router.post(
-  "/application",
-  ValidateApplication,
-  VerifyToken,
-  applicationHandler
-);
+router.post("/application",ValidateApplication,VerifyToken,applicationHandler);
 module.exports = router;
