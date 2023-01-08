@@ -29,6 +29,7 @@ module.exports.VerifyTokenAdmin = async (req, res, next) => {
   } else {
     const { decoded, expired } = verifyJwt(accessToken, "accessTokenSecret");
     if (decoded) {
+      console.log(decoded);
       const {isadmin}=decoded
       if(!isadmin){
         res.status(401).json({ err: "you are not allowed to do it " });
