@@ -3,6 +3,9 @@ const { check, validationResult } = require("express-validator");
 const { generateAccessToken } = require("../utils/jwt");
 const SubjectModel = require("../models/SubjectModel");
 const CourseModel=require('../models/CourseModel')
+const ApplicationModel = require("../models/applicationModel");
+const FreelancerModel = require("../models/FreelancerModel");
+
 exports.SuperAdminLoginHandler = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -106,3 +109,26 @@ exports.getCourseHandler=async(req,res)=>{
 
 }
 
+exports.approveApplicationHandler=async(req,res)=>{
+    try{
+        const {applicationId}=req.body
+        if(!applicationId){
+            return res.status(403).json({ err: " something went wrong" });
+        }
+     const application=   ApplicationModel.updateOne({_id:req.body.applicationId},{$set:{
+            selected:true
+        }})
+        if(!application){
+            res.status(403).json({err:"error happened"})
+        }
+   const freelance=     FreelancerModel.updateOne({_id:req.user._id},{$set:{
+            selected:true
+        }})
+        if(!freelance){
+            res.status(403).json({err:"error happened"})
+        }
+res.json({data:"application selected "})
+    }catch(err){
+        res.status(500).json(err)
+    }
+}

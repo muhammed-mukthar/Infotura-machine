@@ -5,6 +5,7 @@ const {
   getSubjectHandler,
   getCourseHandler,
   addCourseHandler,
+  approveApplicationHandler,
 } = require("../controller/SuperAdminController");
 const { VerifyToken, VerifyTokenAdmin } = require("../middleware/middleware");
 const {
@@ -25,5 +26,5 @@ router.post(
 router.get("/subjects", VerifyTokenAdmin, getSubjectHandler);
 router.post("/course", VerifyTokenAdmin, VaildateCourse, addCourseHandler);
 router.get("/course", VerifyTokenAdmin, getCourseHandler);
-router.post("/appliction", VerifyTokenAdmin,approveApplication);
+router.put("/appliction", VerifyTokenAdmin,approveApplicationHandler);
 module.exports = router;
