@@ -1,37 +1,30 @@
 const mongoose = require("mongoose");
 
-const JobSchema = new mongoose.Schema({
-  region: {
-    type: String,
-    required: true,
-  },
+const AllotTimeUserSchema = new mongoose.Schema({
   course: {
     type: String,
   },
-  faculty: {
+  UserId: {
     type: String,
   },
   subject: {
     type: String,
   },
-  lesson: {
-    type: String,
-  },
-  startTime: {
+  availabletimefrom: {
     type: Date,
   },
-  endTime: {
+  availabletimeto: {
     type: Date,
-  },
-  time: {
-    type: String,
   },
   booked: {
     type: Boolean,
     default: false,
   },
+  time:{
+    type:String
+  }
 });
 
-const Data = mongoose.model("Job", JobSchema);
+const Data = mongoose.model("AllotTime", AllotTimeUserSchema);
 
 module.exports = Data;

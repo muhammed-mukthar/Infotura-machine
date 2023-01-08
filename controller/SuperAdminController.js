@@ -168,8 +168,8 @@ exports.addFacultyHandler = async (req, res) => {
 exports.addJobHandler = async (req, res) => {
   try {
   
-    const startTime = new Date("2022-09-01T09:00:00Z");
-    const endTime = new Date("2022-09-01T10:30:00Z");
+    const startTime = new Date( req.body.startTime);
+    const endTime = new Date( req.body.endTime);
 
     const duration = endTime.getTime() - startTime.getTime();
 
