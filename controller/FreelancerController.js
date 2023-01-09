@@ -4,7 +4,7 @@ const { check, validationResult } = require("express-validator");
 const ApplicationModel = require("../models/applicationModel");
 const AllotTimeModel = require("../models/AllotTime");
 const JobModel = require("../models/JobModel");
-
+const ApplyJob = require("../models/ApplyJob");
 exports.LoginHandler = async (req, res) => {
   try {
     console.log(req.body);
@@ -103,7 +103,7 @@ exports.AllotTimeSlot = (req, res) => {
       if (error) {
         res.status(400).send(error); // return error if validation fails
       } else {
-        res.send("Course saved successfully");
+        res.json({data:"Course saved successfully"});
       }
     });
   } catch (err) {
@@ -128,6 +128,35 @@ exports.GetJobsAlloted = async (req, res) => {
     });
     console.log(allotedJobs);
     res.json(allotedJobs);
+  } catch (err) {
+    res.status(409).json({ err: err.message });
+  }
+};
+
+exports.ApplyJobsAlloted = async (req, res) => {
+  try {
+    const job = await JobModel.findOne({ _id: req.body?.jobId });
+    console.log(job);
+    if (job.booked) {
+      res.json({ data: "the slot has been booked by another user " });
+    }
+
+    let Apply = new ApplyJob({
+      JobId: req.body?.JobId,
+
+      UserId: req.user?._id,
+
+      status: "Applied",
+    });
+
+    Apply.save((error) => {
+      if (error) {
+        res.status(400).send(error); // return error if validation fails
+      } else {
+        res.json({data:"Application saved successfully"});
+      }
+    });
+    res.json({data:"application applied suuccessfully"});
   } catch (err) {
     res.status(409).json({ err: err.message });
   }

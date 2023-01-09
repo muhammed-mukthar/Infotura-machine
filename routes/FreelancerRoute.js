@@ -4,6 +4,7 @@ const {
   applicationHandler,
   AllotTimeSlot,
   GetJobsAlloted,
+  ApplyJobsAlloted,
 } = require("../controller/FreelancerController");
 const { VerifyToken } = require("../middleware/middleware");
 
@@ -19,4 +20,5 @@ router.post("/register", ValidateRegistration, createUserHandler);
 router.post("/application",ValidateApplication,VerifyToken,applicationHandler);
 router.post('/allotslot',VerifyToken,AllotTimeSlot)
 router.get('/allotslot',VerifyToken,GetJobsAlloted)
+router.post('/apply',VerifyToken,ApplyJobsAlloted)
 module.exports = router;

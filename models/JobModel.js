@@ -26,6 +26,9 @@ const JobSchema = new mongoose.Schema({
   time: {
     type: String,
   },
+  status:{
+    type:String,
+  },
   booked: {
     type: Boolean,
     default: false,
