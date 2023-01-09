@@ -3,6 +3,8 @@ const { generateAccessToken } = require("../utils/jwt");
 const { check, validationResult } = require("express-validator");
 const ApplicationModel = require("../models/applicationModel");
 const AllotTimeModel = require("../models/AllotTime");
+const JobModel = require("../models/JobModel");
+
 exports.LoginHandler = async (req, res) => {
   try {
     console.log(req.body);
@@ -104,6 +106,28 @@ exports.AllotTimeSlot = (req, res) => {
         res.send("Course saved successfully");
       }
     });
+  } catch (err) {
+    res.status(409).json({ err: err.message });
+  }
+};
+
+//get all slots provided by admin where the user is qualified
+
+exports.GetJobsAlloted = async (req, res) => {
+  try {
+    const userTime = await AllotTimeModel.findOne({ UserId: req.user?._id });
+    console.log(userTime);
+    const allotedJobs = await JobModel.find({
+      course: userTime.course,
+      $and: [
+        { startTime: { $gte: userTime.availabletimefrom } },
+        { endTime: { $lte: userTime.availabletimeto } },
+        { course: userTime.course },
+        { subject: userTime.subject },
+      ],
+    });
+    console.log(allotedJobs);
+    res.json(allotedJobs);
   } catch (err) {
     res.status(409).json({ err: err.message });
   }
