@@ -29,6 +29,9 @@ const JobSchema = new mongoose.Schema({
   status:{
     type:String,
   },
+    UserId:{
+        type:String
+  },
   booked: {
     type: Boolean,
     default: false,

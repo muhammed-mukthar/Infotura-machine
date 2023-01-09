@@ -135,7 +135,7 @@ exports.GetJobsAlloted = async (req, res) => {
 
 exports.ApplyJobsAlloted = async (req, res) => {
   try {
-    const job = await JobModel.findOne({ _id: req.body?.jobId });
+    const job = await JobModel.findOne({ _id: req.body?.JobId });
     console.log(job);
     if (job.booked) {
       res.json({ data: "the slot has been booked by another user " });
@@ -156,7 +156,7 @@ exports.ApplyJobsAlloted = async (req, res) => {
         res.json({data:"Application saved successfully"});
       }
     });
-    res.json({data:"application applied suuccessfully"});
+  
   } catch (err) {
     res.status(409).json({ err: err.message });
   }

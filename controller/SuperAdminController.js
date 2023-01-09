@@ -6,7 +6,8 @@ const CourseModel = require("../models/CourseModel");
 const ApplicationModel = require("../models/applicationModel");
 const FreelancerModel = require("../models/FreelancerModel");
 const FacultyModel = require("../models/FacultyModel");
-const JobModel=require('../models/JobModel')
+const JobModel = require("../models/JobModel");
+const ApplyJob = require("../models/ApplyJob");
 exports.SuperAdminLoginHandler = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -167,9 +168,8 @@ exports.addFacultyHandler = async (req, res) => {
 
 exports.addJobHandler = async (req, res) => {
   try {
-  
-    const startTime = new Date( req.body.startTime);
-    const endTime = new Date( req.body.endTime);
+    const startTime = new Date(req.body.startTime);
+    const endTime = new Date(req.body.endTime);
 
     const duration = endTime.getTime() - startTime.getTime();
 
@@ -197,6 +197,32 @@ exports.addJobHandler = async (req, res) => {
         res.send("Course saved successfully");
       }
     });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+exports.getAllJobApplicant = async (req, res) => {
+  try {
+    const allAppliedJob = await ApplyJob.find();
+    res.json({ data: allAppliedJob });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+exports.BookTheSlotToUser = async (req, res) => {
+  try {
+const applyJob=await    ApplyJob.updateOne(
+      { UserId: req.body.UserId, JobId: req.params.id },
+      { $set: { isBooked: true } }
+    );
+ const updatejob=await   JobModel.updateOne(
+      { _id: req.params.id },
+      { $set: { UserId: req.body.UserId, booked: true, status: true } }
+    );
+    console.log(applyJob,updatejob);
+    res.json({ data: "project alloted to the user successfully" });
   } catch (err) {
     res.status(500).json(err);
   }
