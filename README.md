@@ -1,6 +1,6 @@
 # Infotura-machine
 
-# To staty running the app 
+# To  run the app 
 
 ### git clone the project
 
